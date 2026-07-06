@@ -1,4 +1,8 @@
-# AetherForge — Iteration Log
+# Liftora — Iteration Log
+
+> Renamed from AetherForge and deployed to GitHub Pages on 2026-07-05:
+> https://mitchelltoney.github.io/Liftora/ (repo mitchelltoney/Liftora,
+> push-to-main auto-deploys). Historical entries below keep the old name.
 
 Running record of every critique-and-refine cycle, per the build directive
 (§7). Severity scale: **Blocker** / **Major** / **Polish**.
