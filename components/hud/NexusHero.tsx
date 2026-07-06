@@ -55,11 +55,10 @@ export function NexusHero() {
       <div className="flex h-full flex-col md:flex-row">
         <div className="relative z-10 flex flex-1 flex-col justify-center p-6 md:p-8">
           <h1 className="bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-3xl font-bold tracking-tight text-transparent md:text-5xl">
-            Train. Log. Forge.
+            Lift. Log. Repeat.
           </h1>
           <p className="mt-3 max-w-lg text-sm text-neutral-400 md:mt-4 md:text-base">
-            Every set you commit loads the bar in real 3D — exact plates,
-            honest math, and records that have to be earned.
+            A clean, modern lifting log.
           </p>
         </div>
 
