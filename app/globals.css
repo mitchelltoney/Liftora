@@ -1,26 +1,284 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
+
+/* ------------------------------------------------------------------ */
+/*  AetherForge v2 — sleek monochrome, iOS-inspired. True-black base,  */
+/*  elevated gray cards, white interaction color, hairline separators. */
+/*  Gold is reserved exclusively for PRs and streaks.                  */
+/*                                                                      */
+/*  Contrast (WCAG AA, verified against #000000 / card #1c1c1e):        */
+/*    text     #ffffff  21.0:1                                          */
+/*    muted    #a1a1a8  ≈ 8.6:1                                         */
+/*    gold     #d4b678  ≈ 10.4:1                                        */
+/*    white/60 hairlines are decorative only, never text                */
+/* ------------------------------------------------------------------ */
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-system);
+  --font-mono: var(--font-system-mono);
+  --font-display: var(--font-system);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Accent tokens. Components reference these names throughout; the v2
+     redesign resolves the old neon slots to monochrome so every accent
+     recolors from this single block. */
+  --color-forge-cyan: var(--forge-accent);
+  --color-forge-cyan-hi: var(--forge-accent);
+  --color-forge-magenta: var(--forge-neutral);
+  --color-forge-gold: var(--forge-gold);
+  --color-forge-panel: var(--forge-panel);
+  --color-forge-panel-hi: var(--forge-panel-hi);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 1rem;
+
+  /* SF Pro on Apple hardware; Inter and friends elsewhere. */
+  --font-system:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    var(--font-inter), "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-system-mono:
+    ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, "Cascadia Mono",
+    monospace;
+
+  --background: #000000;
+  --foreground: #ffffff;
+
+  --forge-accent: #ffffff;
+  --forge-neutral: #a1a1a8;
+  --forge-gold: #d4b678;
+  --forge-panel: #1c1c1e;
+  --forge-panel-hi: #2c2c2e;
+
+  --card: #1c1c1e;
+  --card-foreground: #ffffff;
+  --popover: #1c1c1e;
+  --popover-foreground: #ffffff;
+
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: #2c2c2e;
+  --secondary-foreground: #ffffff;
+  --muted: #1c1c1e;
+  --muted-foreground: #a1a1a8;
+  --accent: #2c2c2e;
+  --accent-foreground: #ffffff;
+  --destructive: #ff453a;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.16);
+  --ring: rgba(255, 255, 255, 0.7);
+
+  --chart-1: #ffffff;
+  --chart-2: #a1a1a8;
+  --chart-3: #d4b678;
+  --chart-4: #636366;
+  --chart-5: #48484a;
+
+  --sidebar: #1c1c1e;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #2c2c2e;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: rgba(255, 255, 255, 0.7);
+}
+
+/* Single deliberate dark theme; .dark mirrors :root for shadcn variants. */
+.dark {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    min-width: 0;
+  }
+  html {
+    @apply font-sans;
+    background: var(--background);
+    letter-spacing: -0.01em;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  ::selection {
+    background: rgba(255, 255, 255, 0.25);
+  }
+  :focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
+  button {
+    touch-action: manipulation;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* iOS-style elevated card: filled surface, generous radius, no border. */
+  .glass-panel {
+    position: relative;
+    border-radius: var(--radius);
+    background: #1c1c1e;
+  }
+  .glass-panel-gold {
+    background: #211c12;
+  }
+
+  /* Section label — iOS grouped-list header: small caps gray, calm. */
+  .hud-label {
+    font-family: var(--font-system);
+    font-size: 0.75rem; /* 12px */
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Legacy glow hooks — v2 resolves them to quiet elevation, not neon. */
+  .glow-cyan {
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  }
+  .glow-gold {
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  }
+  .text-glow-cyan {
+    text-shadow: none;
+  }
+  .text-glow-gold {
+    text-shadow: none;
+  }
+
+  /* Former sci-fi textures — now clean neutral surfaces. */
+  .scanlines {
+    background: #111113;
+  }
+  .hud-grid {
+    background: #111113;
+  }
+}
+
+/* Spotlight sweep (21st.dev / aceternity component dependency). */
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+.animate-spotlight {
+  animation: spotlight 2s ease 0.75s 1 forwards;
+}
+
+/* Minimal spinner used by the Spline suspense fallback. */
+.loader {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2.5px solid rgba(255, 255, 255, 0.15);
+  border-top-color: rgba(255, 255, 255, 0.85);
+  animation: loader-spin 0.8s linear infinite;
+}
+@keyframes loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Commit feedback: quiet white pulse. */
+@keyframes commit-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.45);
+  }
+  100% {
+    box-shadow: 0 0 0 18px rgba(255, 255, 255, 0);
+  }
+}
+.animate-commit-pulse {
+  animation: commit-pulse 450ms ease-out 1;
+}
+
+@keyframes live-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+.animate-live-dot {
+  animation: live-dot 1.8s ease-in-out infinite;
+}
+
+/* Reduced motion: honor the OS setting and the in-app toggle. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+html[data-reduced-motion="true"] *,
+html[data-reduced-motion="true"] *::before,
+html[data-reduced-motion="true"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }
